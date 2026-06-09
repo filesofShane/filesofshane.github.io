@@ -1,0 +1,620 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Shane Dube — Data Scientist</title>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:        #0D0D0D;
+      --surface:   #141414;
+      --border:    #1E1E1E;
+      --accent:    #3B82F6;
+      --accent-dim:#1D4ED8;
+      --text:      #E8E8E8;
+      --muted:     #6B7280;
+      --tag-bg:    #1A1A2E;
+      --tag-text:  #818CF8;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Inter', sans-serif;
+      font-size: 16px;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 1.2rem 2.5rem;
+      background: rgba(13,13,13,0.85);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-logo {
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 600;
+      font-size: 1rem;
+      letter-spacing: 0.02em;
+      color: var(--text);
+      text-decoration: none;
+    }
+    .nav-logo span { color: var(--accent); }
+    .nav-links { display: flex; gap: 2rem; list-style: none; }
+    .nav-links a {
+      font-size: 0.875rem;
+      color: var(--muted);
+      text-decoration: none;
+      transition: color 0.2s;
+      font-family: 'Inter', sans-serif;
+    }
+    .nav-links a:hover { color: var(--text); }
+
+    /* ── HERO ── */
+    #hero {
+      min-height: 100vh;
+      display: flex; flex-direction: column; justify-content: center;
+      padding: 0 2.5rem;
+      max-width: 860px;
+      margin: 0 auto;
+    }
+    .hero-eyebrow {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.8rem;
+      color: var(--accent);
+      letter-spacing: 0.08em;
+      margin-bottom: 1.5rem;
+    }
+    .hero-name {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: clamp(2.8rem, 7vw, 5.5rem);
+      font-weight: 700;
+      line-height: 1.05;
+      letter-spacing: -0.02em;
+      margin-bottom: 1.5rem;
+    }
+    .hero-name .accent { color: var(--accent); }
+    .hero-terminal {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: clamp(0.9rem, 2vw, 1.1rem);
+      color: var(--muted);
+      margin-bottom: 2.5rem;
+      min-height: 1.8em;
+    }
+    .hero-terminal .cursor {
+      display: inline-block;
+      width: 2px; height: 1.1em;
+      background: var(--accent);
+      margin-left: 2px;
+      vertical-align: text-bottom;
+      animation: blink 1s step-end infinite;
+    }
+    @keyframes blink { 50% { opacity: 0; } }
+    .hero-sub {
+      font-size: 1rem;
+      color: var(--muted);
+      max-width: 540px;
+      margin-bottom: 3rem;
+      line-height: 1.7;
+    }
+    .hero-actions { display: flex; gap: 1rem; flex-wrap: wrap; }
+    .btn {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      padding: 0.75rem 1.5rem;
+      border-radius: 6px;
+      font-family: 'Inter', sans-serif;
+      font-size: 0.875rem;
+      font-weight: 500;
+      text-decoration: none;
+      transition: all 0.2s;
+      cursor: pointer;
+      border: none;
+    }
+    .btn-primary {
+      background: var(--accent);
+      color: #fff;
+    }
+    .btn-primary:hover { background: var(--accent-dim); transform: translateY(-1px); }
+    .btn-outline {
+      background: transparent;
+      color: var(--text);
+      border: 1px solid var(--border);
+    }
+    .btn-outline:hover { border-color: var(--accent); color: var(--accent); transform: translateY(-1px); }
+
+    /* ── SECTIONS ── */
+    section {
+      padding: 5rem 2.5rem;
+      max-width: 860px;
+      margin: 0 auto;
+    }
+    .section-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.75rem;
+      color: var(--accent);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-bottom: 0.75rem;
+    }
+    .section-title {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: clamp(1.6rem, 4vw, 2.2rem);
+      font-weight: 600;
+      letter-spacing: -0.01em;
+      margin-bottom: 2.5rem;
+      color: var(--text);
+    }
+    .divider {
+      border: none;
+      border-top: 1px solid var(--border);
+      margin: 0;
+    }
+
+    /* ── ABOUT ── */
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 3rem;
+      align-items: start;
+    }
+    .about-text p {
+      color: var(--muted);
+      line-height: 1.8;
+      margin-bottom: 1rem;
+      font-size: 0.95rem;
+    }
+    .about-text p:last-child { margin-bottom: 0; }
+    .about-text strong { color: var(--text); font-weight: 500; }
+    .stat-list { display: flex; flex-direction: column; gap: 1.5rem; }
+    .stat-item { border-left: 2px solid var(--accent); padding-left: 1rem; }
+    .stat-number {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: var(--text);
+      line-height: 1;
+    }
+    .stat-label { font-size: 0.8rem; color: var(--muted); margin-top: 0.2rem; }
+
+    /* ── PROJECTS ── */
+    .projects-list { display: flex; flex-direction: column; gap: 1.5rem; }
+    .project-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 2rem;
+      transition: border-color 0.2s, transform 0.2s;
+      position: relative;
+      overflow: hidden;
+    }
+    .project-card::before {
+      content: '';
+      position: absolute; top: 0; left: 0; right: 0;
+      height: 2px;
+      background: var(--accent);
+      opacity: 0;
+      transition: opacity 0.2s;
+    }
+    .project-card:hover { border-color: #2D2D2D; transform: translateY(-2px); }
+    .project-card:hover::before { opacity: 1; }
+    .project-header {
+      display: flex; justify-content: space-between; align-items: flex-start;
+      margin-bottom: 0.75rem;
+      gap: 1rem;
+    }
+    .project-title {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: var(--text);
+    }
+    .project-type {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.7rem;
+      color: var(--muted);
+      white-space: nowrap;
+      padding-top: 0.2rem;
+    }
+    .project-desc {
+      color: var(--muted);
+      font-size: 0.9rem;
+      line-height: 1.7;
+      margin-bottom: 1.25rem;
+    }
+    .project-metrics {
+      display: flex; gap: 1.5rem;
+      margin-bottom: 1.25rem;
+      flex-wrap: wrap;
+    }
+    .metric {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.78rem;
+    }
+    .metric-val { color: var(--accent); font-weight: 500; }
+    .metric-key { color: var(--muted); }
+    .tag-list { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 1.25rem; }
+    .tag {
+      background: var(--tag-bg);
+      color: var(--tag-text);
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.72rem;
+      padding: 0.25rem 0.65rem;
+      border-radius: 4px;
+    }
+    .project-links { display: flex; gap: 0.75rem; }
+    .project-link {
+      font-size: 0.8rem;
+      color: var(--muted);
+      text-decoration: none;
+      display: flex; align-items: center; gap: 0.35rem;
+      transition: color 0.2s;
+    }
+    .project-link:hover { color: var(--accent); }
+
+    /* ── SKILLS ── */
+    .skills-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1.5rem;
+    }
+    .skill-group {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 1.5rem;
+    }
+    .skill-group-title {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.72rem;
+      color: var(--accent);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-bottom: 1rem;
+    }
+    .skill-items { display: flex; flex-direction: column; gap: 0.5rem; }
+    .skill-item {
+      font-size: 0.875rem;
+      color: var(--muted);
+      display: flex; align-items: center; gap: 0.5rem;
+    }
+    .skill-item::before {
+      content: '';
+      width: 4px; height: 4px;
+      background: var(--border);
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+    .skill-item.highlight { color: var(--text); }
+    .skill-item.highlight::before { background: var(--accent); }
+
+    /* ── CONTACT ── */
+    #contact {
+      padding-bottom: 6rem;
+    }
+    .contact-inner {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 3rem;
+      text-align: center;
+    }
+    .contact-inner .section-title { margin-bottom: 0.75rem; }
+    .contact-sub {
+      color: var(--muted);
+      font-size: 0.95rem;
+      margin-bottom: 2rem;
+      max-width: 420px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .contact-links {
+      display: flex; justify-content: center; gap: 1rem; flex-wrap: wrap;
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 1.5rem 2.5rem;
+      text-align: center;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.75rem;
+      color: var(--muted);
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 640px) {
+      nav { padding: 1rem 1.25rem; }
+      .nav-links { gap: 1.25rem; }
+      #hero, section { padding-left: 1.25rem; padding-right: 1.25rem; }
+      .about-grid { grid-template-columns: 1fr; gap: 2rem; }
+      .contact-inner { padding: 2rem 1.25rem; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      * { animation: none !important; transition: none !important; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <a href="#hero" class="nav-logo">SD<span>.</span></a>
+    <ul class="nav-links">
+      <li><a href="#about">About</a></li>
+      <li><a href="#projects">Projects</a></li>
+      <li><a href="#skills">Skills</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO -->
+  <section id="hero">
+    <p class="hero-eyebrow">// data scientist · johannesburg, za</p>
+    <h1 class="hero-name">Shane<br><span class="accent">Dube.</span></h1>
+    <div class="hero-terminal">
+      <span id="typewriter"></span><span class="cursor"></span>
+    </div>
+    <p class="hero-sub">
+      BSc IT graduate specialising in Data Science. I build end-to-end ML pipelines — 
+      from raw data to deployed models — and care about making outputs that actually mean something to a business.
+    </p>
+    <div class="hero-actions">
+      <a href="Shane_Dube.pdf" download class="btn btn-primary">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+        Download CV
+      </a>
+      <a href="#projects" class="btn btn-outline">View Projects</a>
+      <a href="https://github.com/filesofShane" target="_blank" rel="noopener" class="btn btn-outline">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/></svg>
+        GitHub
+      </a>
+    </div>
+  </section>
+
+  <hr class="divider"/>
+
+  <!-- ABOUT -->
+  <section id="about">
+    <p class="section-label">// 01 — about</p>
+    <h2 class="section-title">Who I am</h2>
+    <div class="about-grid">
+      <div class="about-text">
+        <p>
+          I'm a Data Science graduate from <strong>Eduvos (2022–2025)</strong> based in Johannesburg. 
+          My focus is on the full ML lifecycle — not just modelling, but the pipelines, the preprocessing, 
+          and the deployment that make models useful in practice.
+        </p>
+        <p>
+          I've worked independently and in research team settings, and I care about communicating 
+          what models are actually telling you — to engineers and to business stakeholders alike.
+        </p>
+        <p>
+          Currently building cloud ML skills through <strong>Microsoft Azure</strong> (SDK v2, DP-100 track) 
+          alongside expanding my portfolio with production-structured data engineering work.
+        </p>
+      </div>
+      <div class="stat-list">
+        <div class="stat-item">
+          <div class="stat-number">0.95</div>
+          <div class="stat-label">ROC-AUC — best model, churn prediction</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-number">440k+</div>
+          <div class="stat-label">customer records processed end-to-end</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-number">92%</div>
+          <div class="stat-label">accuracy — dementia classification (clinical data)</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-number">4 yrs</div>
+          <div class="stat-label">hands-on coding experience</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <hr class="divider"/>
+
+  <!-- PROJECTS -->
+  <section id="projects">
+    <p class="section-label">// 02 — projects</p>
+    <h2 class="section-title">What I've built</h2>
+    <div class="projects-list">
+
+      <!-- Churn -->
+      <div class="project-card">
+        <div class="project-header">
+          <h3 class="project-title">Customer Churn Prediction System</h3>
+          <span class="project-type">Individual · 2026</span>
+        </div>
+        <p class="project-desc">
+          Production-structured ML pipeline built to predict churn across 440,000+ customer records. 
+          Separate preprocessing, training, and evaluation scripts. EDA surfaced key churn drivers — 
+          usage frequency, support call volume, payment delays — which fed directly into feature engineering decisions.
+          Models serialised with joblib and served via a Streamlit front-end.
+        </p>
+        <div class="project-metrics">
+          <div class="metric"><span class="metric-val">0.95</span> <span class="metric-key">ROC-AUC (RF)</span></div>
+          <div class="metric"><span class="metric-val">0.91</span> <span class="metric-key">ROC-AUC (baseline LR)</span></div>
+          <div class="metric"><span class="metric-val">440k+</span> <span class="metric-key">records</span></div>
+        </div>
+        <div class="tag-list">
+          <span class="tag">Python</span><span class="tag">scikit-learn</span><span class="tag">Pandas</span>
+          <span class="tag">Streamlit</span><span class="tag">joblib</span><span class="tag">Git</span>
+        </div>
+        <div class="project-links">
+          <a href="https://github.com/filesofShane" target="_blank" rel="noopener" class="project-link">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/></svg>
+            View on GitHub
+          </a>
+        </div>
+      </div>
+
+      <!-- Alzheimer's -->
+      <div class="project-card">
+        <div class="project-header">
+          <h3 class="project-title">Alzheimer's & Dementia Classification</h3>
+          <span class="project-type">Group Research · 2025</span>
+        </div>
+        <p class="project-desc">
+          Research project classifying dementia severity from clinical datasets and MRI scans using a 
+          two-phase hybrid architecture. Built end-to-end data pipelines including missing value imputation, 
+          one-hot encoding, standard scaling, and SMOTE for class balancing. Deployed an interactive 
+          Streamlit dashboard for medical practitioners outputting patient risk levels with confidence scores.
+        </p>
+        <div class="project-metrics">
+          <div class="metric"><span class="metric-val">92%</span> <span class="metric-key">accuracy (clinical)</span></div>
+          <div class="metric"><span class="metric-val">85%</span> <span class="metric-key">accuracy (MRI)</span></div>
+          <div class="metric"><span class="metric-val">RF + CNN</span> <span class="metric-key">hybrid architecture</span></div>
+        </div>
+        <div class="tag-list">
+          <span class="tag">Python</span><span class="tag">TensorFlow</span><span class="tag">Keras</span>
+          <span class="tag">scikit-learn</span><span class="tag">SMOTE</span><span class="tag">Streamlit</span>
+        </div>
+        <div class="project-links">
+          <a href="https://github.com/filesofShane" target="_blank" rel="noopener" class="project-link">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/></svg>
+            View on GitHub
+          </a>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <hr class="divider"/>
+
+  <!-- SKILLS -->
+  <section id="skills">
+    <p class="section-label">// 03 — skills</p>
+    <h2 class="section-title">Technical stack</h2>
+    <div class="skills-grid">
+      <div class="skill-group">
+        <div class="skill-group-title">Languages</div>
+        <div class="skill-items">
+          <span class="skill-item highlight">Python</span>
+          <span class="skill-item highlight">SQL</span>
+        </div>
+      </div>
+      <div class="skill-group">
+        <div class="skill-group-title">ML / AI</div>
+        <div class="skill-items">
+          <span class="skill-item highlight">scikit-learn</span>
+          <span class="skill-item highlight">TensorFlow / Keras</span>
+          <span class="skill-item">Random Forest · CNNs · LR</span>
+          <span class="skill-item">SMOTE · feature engineering</span>
+        </div>
+      </div>
+      <div class="skill-group">
+        <div class="skill-group-title">Data</div>
+        <div class="skill-items">
+          <span class="skill-item highlight">Pandas · NumPy</span>
+          <span class="skill-item">EDA · data cleaning</span>
+          <span class="skill-item">pipeline construction</span>
+        </div>
+      </div>
+      <div class="skill-group">
+        <div class="skill-group-title">MLOps & Deploy</div>
+        <div class="skill-items">
+          <span class="skill-item highlight">Streamlit</span>
+          <span class="skill-item">joblib serialisation</span>
+          <span class="skill-item">ROC-AUC · precision-recall</span>
+          <span class="skill-item">model evaluation pipelines</span>
+        </div>
+      </div>
+      <div class="skill-group">
+        <div class="skill-group-title">Visualisation</div>
+        <div class="skill-items">
+          <span class="skill-item highlight">Matplotlib · Seaborn</span>
+          <span class="skill-item highlight">Power BI</span>
+        </div>
+      </div>
+      <div class="skill-group">
+        <div class="skill-group-title">Cloud & Tools</div>
+        <div class="skill-items">
+          <span class="skill-item highlight">Azure ML (in progress)</span>
+          <span class="skill-item">DP-100 track · SDK v2</span>
+          <span class="skill-item">Git · GitHub · VS Code</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <hr class="divider"/>
+
+  <!-- CONTACT -->
+  <section id="contact">
+    <div class="contact-inner">
+      <p class="section-label" style="text-align:center">// 04 — contact</p>
+      <h2 class="section-title">Let's talk</h2>
+      <p class="contact-sub">
+        Open to junior and intermediate data science roles. Remote or Johannesburg-based. 
+        Immediate availability.
+      </p>
+      <div class="contact-links">
+        <a href="mailto:shanedube11@gmail.com" class="btn btn-primary">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+          shanedube11@gmail.com
+        </a>
+        <a href="https://github.com/filesofShane" target="_blank" rel="noopener" class="btn btn-outline">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/></svg>
+          github.com/filesofShane
+        </a>
+        <a href="Shane_Dube.pdf" download class="btn btn-outline">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+          Download CV
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <span>filesofshane.github.io</span>
+  </footer>
+
+  <script>
+    // Typewriter effect
+    const lines = [
+      "building ML pipelines that ship.",
+      "turning 440k records into decisions.",
+      "end-to-end: data → model → deploy.",
+      "always learning. always building.",
+    ];
+    let lineIdx = 0, charIdx = 0, deleting = false;
+    const el = document.getElementById('typewriter');
+
+    function type() {
+      const current = lines[lineIdx];
+      if (!deleting) {
+        el.textContent = current.slice(0, ++charIdx);
+        if (charIdx === current.length) {
+          deleting = true;
+          setTimeout(type, 2200);
+          return;
+        }
+      } else {
+        el.textContent = current.slice(0, --charIdx);
+        if (charIdx === 0) {
+          deleting = false;
+          lineIdx = (lineIdx + 1) % lines.length;
+        }
+      }
+      setTimeout(type, deleting ? 35 : 60);
+    }
+    type();
+  </script>
+
+</body>
+</html>
